@@ -7,7 +7,7 @@ p = is_bad('Price Per Unit')
 t = is_bad('Total Spent')
 
 def cleaning_data (data : pl.DataFrame) -> pl.DataFrame:
-    """this function cleans the cafe_sales data by removing rows with bad values , casting and dropping unnecessary columns."""
+    """this function cleans the cafe_sales data by removing rows with bad values , casting and dropping unnecessary columns"""""
     df = (data
         .with_columns(
             pl.col(columns).cast(pl.Utf8).str.strip_chars() ,
@@ -38,7 +38,9 @@ def cleaning_data (data : pl.DataFrame) -> pl.DataFrame:
             pl.col('Transaction ID').str.replace_all(r'\D' , '').cast(pl.Int64 , strict = False) ,
             pl.col('Quantity').round(0).cast(pl.Int64) ,
             pl.col('Transaction Date').str.strptime(pl.Date , '%Y-%m-%d' , strict = False) ,
+            pl.col('Item').str.to_lowercase() ,
         )
+
         .rename({
             'Transaction ID' : 'transaction_id' ,
             'Item' : 'item' ,
@@ -47,7 +49,6 @@ def cleaning_data (data : pl.DataFrame) -> pl.DataFrame:
             'Total Spent' : 'total_spent' ,
             'Transaction Date' : 'transaction_date' ,
         })
-        .unique(subset = ['transaction_id'])
-        .unique()
+        .unique(maintain_order = True)
     )
     return df
