@@ -1,7 +1,7 @@
 import polars as pl
 
 columns = ['Transaction ID' , 'Item' , 'Payment Method' , 'Location' , 'Transaction Date']
-anomalies = ['NULL' , 'ERROR' , 'UNKONWN' , '' , 'N/A' , 'NA' , 'NAN']
+anomalies = ['NULL' , 'ERROR' , 'UNKNOWN' , '' , 'N/A' , 'NA' , 'NAN']
 
 def nulls_percentage(df : pl.DataFrame) -> pl.DataFrame:
     """ this function calculates the percentage of null values in each column of the list columns."""

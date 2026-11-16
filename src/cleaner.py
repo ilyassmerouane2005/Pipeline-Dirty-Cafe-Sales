@@ -1,6 +1,5 @@
 import polars as pl
 from detector import is_bad
-from extractor import extract_data
 
 columns = ['Transaction ID' , 'Item' , 'Quantity' , 'Price Per Unit' , 'Total Spent' , 'Transaction Date']
 q = is_bad('Quantity')
@@ -8,6 +7,7 @@ p = is_bad('Price Per Unit')
 t = is_bad('Total Spent')
 
 def cleaning_data (data : pl.DataFrame) -> pl.DataFrame:
+    """this function cleans the cafe_sales data by removing rows with bad values , casting and dropping unnecessary columns."""
     df = (data
         .with_columns(
             pl.col(columns).cast(pl.Utf8).str.strip_chars() ,
