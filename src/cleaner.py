@@ -1,5 +1,5 @@
 import polars as pl
-from detector import is_bad
+from src.detector import is_bad
 
 columns = ['Transaction ID' , 'Item' , 'Quantity' , 'Price Per Unit' , 'Total Spent' , 'Transaction Date']
 q = is_bad('Quantity')
@@ -16,6 +16,7 @@ def cleaning_data (data : pl.DataFrame) -> pl.DataFrame:
             ~((p & q) | (p & t) | (q & t)) ,
             ~is_bad('Item') ,
             ~is_bad('Transaction Date') ,
+            ~is_bad('Transaction ID') ,
         )
         .drop('Payment Method' , 'Location')
         .with_columns(
